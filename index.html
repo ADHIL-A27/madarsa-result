@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Madarsa Result Publication</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+
+<div class="container mt-5">
+
+    <h2 class="text-center text-3xl font-bold mb-4">
+        MADARSA RESULT PUBLICATION
+    </h2>
+
+
+    <!-- SEARCH -->
+    <div class="card p-4 shadow">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <input type="text" id="roll" class="form-control" placeholder="Roll">
+            </div>
+
+            <div class="col-md-3">
+                <input type="text" id="name" class="form-control" placeholder="Name">
+            </div>
+
+            <div class="col-md-3">
+
+                <select id="class" class="form-control">
+
+                    <option value="">Class</option>
+                    <option>LKG</option>
+                    <option>UKG</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+
+
+                </select>
+
+            </div>
+
+            <div class="col-md-3">
+                <button onclick="searchResult()" class="btn btn-primary w-100">
+                    Search
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="card mt-4 p-3">
+
+        <table class="table table-bordered">
+
+            <thead class="table-dark">
+            <tr id="tableHead">
+                <th>Roll</th>
+                <th>Name</th>
+                <th>Class</th>
+            </tr>
+            </thead>
+
+            <tbody id="resultBody"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+function getGrade(mark)
+{
+    if (mark >= 90) return {g:"A+", c:"bg-success text-white"};
+    if (mark >= 80) return {g:"A", c:"bg-primary text-white"};
+    if (mark >= 70) return {g:"B+", c:"bg-info text-dark"};
+    if (mark >= 60) return {g:"B", c:"bg-warning text-dark"};
+    if (mark >= 50) return {g:"C+", c:"bg-secondary text-white"};
+    if (mark >= 40) return {g:"C", c:"bg-dark text-white"};
+    if (mark >= 30) return {g:"D+", c:"bg-danger text-white"};
+    if (mark >= 20) return {g:"D", c:"bg-danger text-white"};
+    return {g:"E", c:"bg-black text-white"};
+}
+
+
+
+
+
+let students = [
+
+// =========================== CLASS UKG ===========================
+
+{
+    roll: "1",
+    name: "Adham Ibrahim",
+    class: "UKG",
+
+    subjects: {
+        "QIRAATHU ROULA": 91,
+        "POONILLAAVV": 75,
+        "PRACTICAL": 80
+    }
+},
+
+{
+    roll: "2",
+    name: "Ayishatul Minha",
+    class: "UKG",
+
+    subjects: {
+        "QIRAATHU ROULA": 97,
+        "POONILLAAVV": 73,
+        "PRACTICAL": 75
+    }
+},
+
+{
+    roll: "3",
+    name: "Fahmidha M.T",
+    class: "UKG",
+
+    subjects: {
+        "QIRAATHU ROULA": 72,
+        "POONILLAAVV": 77,
+        "PRACTICAL": 80
+    }
+},
+
+//  ============================== class 1 =======================================
+
+
+
+{
+    roll: "1",
+    name: "Muhammed Akbar",
+    class: "1",
+
+    subjects: {
+        "DUROOSUL ISLAM": 50,
+        "KITHABATH": 46,
+        "THAHFEEM": 52,
+        "PRACTICAL": 60
+    }
+},
+
+{
+    roll: "2",
+    name: "Muhammed Farhan",
+    class: "1",
+
+    subjects: {
+        "DUROOSUL ISLAM": 75,
+        "KITHABATH": 75,
+        "THAHFEEM": 81,
+        "PRACTICAL": 63
+    }
+},
+
+{
+    roll: "3",
+    name: "Muhammed Faizan",
+    class: "1",
+
+    subjects: {
+        "DUROOSUL ISLAM": 85,
+        "KITHABATH": 87,
+        "THAHFEEM": 80,
+        "PRACTICAL": 63
+    }
+},
+
+{
+    roll: "4",
+    name: "Adhila Sidheeq",
+    class: "1",
+
+    subjects: {
+        "DUROOSUL ISLAM": 50,
+        "KITHABATH": 56,
+        "THAHFEEM": 66,
+        "PRACTICAL": 56
+    }
+},
+
+{
+    roll: "5",
+    name: "Fathima Hanna",
+    class: "1",
+
+    subjects: {
+        "DUROOSUL ISLAM": 95,
+        "KITHABATH": 95,
+        "THAHFEEM": 95,
+        "PRACTICAL": 79
+    }
+},
+
+// ================ class 2 ===================
+
+
+{
+    roll: "1",
+    name: "Muhammed Mishab",
+    class: "2",
+
+    subjects: {
+        "QURAN HIFAL": 87,
+        "DOORUSUL ISLAM": 93,
+        "KITHABATH": 92,
+        "TAJVEED": 84,
+        "PRACTICAL": 78
+    }
+},
+
+{
+    roll: "2",
+    name: "Muhammed Afhan",
+    class: "2",
+
+    subjects: {
+        "QURAN HIFAL": 70,
+        "DOORUSUL ISLAM": 50,
+        "KITHABATH": 67,
+        "TAJVEED": 61,
+        "PRACTICAL": 61
+    }
+},
+
+{
+    roll: "3",
+    name: "Ayisha Adheeba",
+    class: "2",
+
+    subjects: {
+        "QURAN HIFAL": 65,
+        "DOORUSUL ISLAM": 85,
+        "KITHABATH": 91,
+        "TAJVEED": 71,
+        "PRACTICAL": 69
+    }
+},
+
+{
+    roll: "4",
+    name: "Kadheeja Adhabiya",
+    class: "2",
+
+    subjects: {
+        "QURAN HIFAL": 71,
+        "DOORUSUL ISLAM": 76,
+        "KITHABATH": 91,
+        "TAJVEED": 69,
+        "PRACTICAL": 69
+    }
+},
+
+{
+    roll: "5",
+    name: "Inaya Fathima",
+    class: "2",
+
+    subjects: {
+        "QURAN HIFAL": 36,
+        "DOORUSUL ISLAM": 36,
+        "KITHABATH": 37,
+        "TAJVEED": 61,
+        "PRACTICAL": 62
+    }
+},
+
+{
+    roll: "6",
+    name: "Aizal Fathima",
+    class: "2",
+
+    subjects: {
+        "QURAN HIFAL": 30,
+        "DOORUSUL ISLAM": 44,
+        "KITHABATH": 28,
+        "TAJVEED": 54,
+        "PRACTICAL": 63
+    }
+}
+,
+{
+    roll: "1",
+    name: "ABDUL HAKEEM",
+    class: "3",
+
+    subjects: {
+        "QURAN HIFAL": 65,
+        "DOORUSUL ISLAM 1": 50,
+        "DOORUSUL ISLAM 2": 55,
+        "TAJVEED": 50,
+        "FIQAH": 50,
+        "PRACTICAL": 79
+    }
+},
+
+{
+    roll: "2",
+    name: "MUHAMMED M.T",
+    class: "3",
+
+    subjects: {
+        "QURAN HIFAL": 95,
+        "DOORUSUL ISLAM 1": 77,
+        "DOORUSUL ISLAM 2": 75,
+        "TAJVEED": 86,
+        "FIQAH": 89,
+        "PRACTICAL": 72
+    }
+},
+
+{
+    roll: "3",
+    name: "MUHAMMAD RAMEEZ",
+    class: "3",
+
+    subjects: {
+        "QURAN HIFAL": 55,
+        "DOORUSUL ISLAM 1": 60,
+        "DOORUSUL ISLAM 2": 55,
+        "TAJVEED": 52,
+        "FIQAH": 58,
+        "PRACTICAL": 79
+    }
+},
+
+{
+    roll: "4",
+    name: "MUHAMMED BILAL",
+    class: "3",
+
+    subjects: {
+        "QURAN HIFAL": 78,
+        "DOORUSUL ISLAM 1": 68,
+        "DOORUSUL ISLAM 2": 61,
+        "TAJVEED": 74,
+        "FIQAH": 88,
+        "PRACTICAL": 78
+    }
+},
+
+{
+    roll: "5",
+    name: "MUHAMMED HANNAN",
+    class: "3",
+
+    subjects: {
+        "QURAN HIFAL": 80,
+        "DOORUSUL ISLAM 1": 83,
+        "DOORUSUL ISLAM 2": 56,
+        "TAJVEED": 48,
+        "FIQAH": 60,
+        "PRACTICAL": 77
+    }
+},
+
+{
+    roll: "6",
+    name: "MUHAMMED IMRAN",
+    class: "3",
+
+    subjects: {
+        "QURAN HIFAL": 60,
+        "DOORUSUL ISLAM 1": 50,
+        "DOORUSUL ISLAM 2": 52,
+        "TAJVEED": 54,
+        "FIQAH": 50,
+        "PRACTICAL": 57
+    }
+},
+
+{
+    roll: "7",
+    name: "MUHAMMED SUHAIL",
+    class: "3",
+
+    subjects: {
+        "QURAN HIFAL": 0,
+        "DOORUSUL ISLAM 1": 0,
+        "DOORUSUL ISLAM 2": 0,
+        "TAJVEED": 0,
+        "FIQAH": 0,
+        "PRACTICAL": 0
+    }
+},
+
+{
+    roll: "1",
+    name: "Muhammed Amrad",
+    class: "4",
+
+    subjects: {
+        "QURAN HIFAL": 60,
+        "DOORUSUL ISLAM 1": 64,
+        "DOORUSUL ISLAM 2": 60,
+        "FIQAH": 62,
+        "TAJVEED": 60,
+        "PRACTICAL": 65
+    }
+},
+
+{
+    roll: "1",
+    name: "Muhammed Sahad",
+    class: "6",
+
+    subjects: {
+        "QURAN HIFAL": 70,
+        "FIQAH": 81,
+        "THAZKIYA TAJVEED": 55,
+        "THAREEH": 81,
+        "DOORUSUL ISLAM": 72,
+        "PRACTICAL": 68
+    }
+},
+
+{
+    roll: "2",
+    name: "Muhammed Bilal",
+    class: "6",
+
+    subjects: {
+        "QURAN HIFAL": 60,
+        "FIQAH": 52,
+        "THAZKIYA TAJVEED": 45,
+        "THAREEH": 57,
+        "DOORUSUL ISLAM": 56,
+        "PRACTICAL": 68
+    }
+},
+
+{
+    roll: "3",
+    name: "Muhammed Basith",
+    class: "6",
+
+    subjects: {
+        "QURAN HIFAL": 65,
+        "FIQAH": 64,
+        "THAZKIYA TAJVEED": 52,
+        "THAREEH": 79,
+        "DOORUSUL ISLAM": 65,
+        "PRACTICAL": 68
+    }
+},
+
+{
+    roll: "1",
+    name: "Badusha Ibrahim",
+    class: "8",
+
+    subjects: {
+        "QURAN HIFAL": 95,
+        "DOORUSUL ISLAM": 76,
+        "THAZKIYA": 100,
+        "FIQAH": 82,
+        "PROJECT": 100
+    }
+},
+
+{
+    roll: "2",
+    name: "Raihana Saleem",
+    class: "8",
+
+    subjects: {
+        "QURAN HIFAL": 92,
+        "DOORUSUL ISLAM": 73,
+        "THAZKIYA": 89,
+        "FIQAH": 85,
+        "PROJECT": 100
+    }
+},
+
+{
+    roll: "3",
+    name: "Fathima Nourin",
+    class: "8",
+
+    subjects: {
+        "QURAN HIFAL": 90,
+        "DOORUSUL ISLAM": 89,
+        "THAZKIYA": 94,
+        "FIQAH": 100,
+        "PROJECT": 100
+    }
+}
+];
+
+
+
+
+
+function searchResult() {
+
+    let roll = document.getElementById("roll").value.toLowerCase();
+    let name = document.getElementById("name").value.toLowerCase();
+    let cls = document.getElementById("class").value;
+
+    let tbody = document.getElementById("resultBody");
+    let head = document.getElementById("tableHead");
+
+    tbody.innerHTML = "";
+
+    // reset header
+    head.innerHTML = `
+        <th>Roll</th>
+        <th>Name</th>
+        <th>Class</th>
+    `;
+
+
+    let headerAdded = false;
+
+
+    students.forEach(s => {
+
+        if (
+            (roll === "" || s.roll.includes(roll)) &&
+            (name === "" || s.name.toLowerCase().includes(name)) &&
+            (cls === "" || s.class === cls)
+        ) {
+
+            let total = 0;
+            let count = 0;
+
+
+            // add subject header only once
+
+            if (!headerAdded)
+            {
+                for (let sub in s.subjects)
+                {
+                    head.innerHTML += `<th>${sub}</th>`;
+                }
+
+                head.innerHTML += "<th>Total</th><th>Average</th><th>Grade</th>";
+
+                headerAdded = true;
+            }
+
+
+            let row = `
+                <tr>
+                <td>${s.roll}</td>
+                <td>${s.name}</td>
+                <td>${s.class}</td>
+            `;
+
+
+            for (let sub in s.subjects)
+            {
+                let m = s.subjects[sub];
+
+                total += m;
+                count++;
+
+                row += `<td>${m}</td>`;
+            }
+
+
+            let avg = total / count;
+
+            let g = getGrade(avg);
+
+
+            row += `
+                <td>${total}</td>
+                <td>${avg.toFixed(1)}</td>
+                <td class="${g.c} fw-bold">${g.g}</td>
+            `;
+
+
+            row += "</tr>";
+
+            tbody.innerHTML += row;
+
+        }
+
+    });
+
+}
+
+
+</script>
+
+
+</body>
+</html>
