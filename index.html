@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 
@@ -13,13 +14,11 @@
 
 <body class="bg-gray-200 p-2 sm:p-4">
 
-
 <div class="max-w-md w-full mx-auto">
 
 <h2 class="text-center text-xl sm:text-2xl font-bold mb-3">
 MADARSA RESULT
 </h2>
-
 
 <input id="roll" placeholder="Roll"
 class="border p-2 w-full mb-2 rounded">
@@ -31,12 +30,12 @@ class="border p-2 w-full mb-2 rounded">
 class="border p-2 w-full mb-2 rounded">
 
 <option value="">Class</option>
-
 <option>UKG</option>
 <option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4</option>
+<option>5</option>
 <option>6</option>
 <option>8</option>
 
@@ -44,21 +43,13 @@ class="border p-2 w-full mb-2 rounded">
 
 <button onclick="searchResult()"
 class="bg-blue-600 text-white w-full p-2 rounded mb-3">
-
-Search
-
-</button>
-
+Search </button>
 
 <div id="result"></div>
 
-
 </div>
 
-
-
 <script>
-
 
 function getGrade(m)
 {
@@ -71,7 +62,6 @@ if(m>=50)return"C+";
 if(m>=40)return"C";
 return"D";
 }
-
 
 
 let students = [
@@ -480,7 +470,6 @@ let students = [
 
 
 
-
 function searchResult(){
 
 let roll=document.getElementById("roll").value.toLowerCase()
@@ -499,29 +488,31 @@ if(
 
 let total=0
 let count=0
-
 let rows=""
+let fail=false
 
 for(let sub in s.subjects){
 
 let m=s.subjects[sub]
+
+if(m<40) fail=true
 
 total+=m
 count++
 
 rows+=`
 
-<div class="flex justify-between items-center border-b py-2 text-sm sm:text-base">
+<div class="flex justify-between items-center border-b py-2">
 
-<div class="pr-2">${sub}</div>
+<div>${sub}</div>
 
 <div class="flex gap-2">
 
-<span class="bg-green-600 text-white px-2 sm:px-3 py-1 rounded text-xs sm:text-sm">
+<span class="bg-green-600 text-white px-2 py-1 rounded">
 ${m}
 </span>
 
-<span class="bg-cyan-400 px-2 sm:px-3 py-1 rounded text-xs sm:text-sm">
+<span class="bg-cyan-400 px-2 py-1 rounded">
 ${getGrade(m)}
 </span>
 
@@ -533,17 +524,35 @@ ${getGrade(m)}
 
 }
 
-let avg=total/count
-let pass=avg>=40?"Pass":"Fail"
+let avg = total / count
+
+let status=""
+
+if(fail){
+status="Fail"
+}
+else if(avg>=70){
+status="First Class"
+}
+else if(avg>=60){
+status="Second Class"
+}
+else if(avg>=50){
+status="Third Class"
+}
+else{
+status="Pass"
+}
+
 
 
 out+=`
 
 <div class="bg-white shadow rounded overflow-hidden mb-4">
 
-<div class="bg-blue-600 text-yellow-300 text-center p-3 sm:p-4 font-bold text-sm sm:text-xl leading-tight">
+<div class="bg-blue-600 text-yellow-300 text-center p-3 font-bold">
 
-IBANATHUSUNNA <br>
+IMAM ABOOHURAIRA <br>
 SUNNI MADARASA <br>
 ERAMALLUOOR
 
@@ -559,38 +568,22 @@ Reg: ${s.roll} | Class: ${s.class}
 
 </div>
 
-
-<div class="bg-gray-200 text-center font-bold p-2 text-sm sm:text-base">
-
-MADRASA ANNUAL EXAM 2026
-
-</div>
-
-
-<div class="p-2 sm:p-3">
-
-<div class="flex justify-between font-bold border-b pb-1 text-sm sm:text-base">
-
-<div>Subject</div>
-<div>Marks</div>
-
-</div>
+<div class="p-2">
 
 ${rows}
 
+<div class="flex justify-between mt-3 font-bold">
 
-<div class="flex justify-between mt-3 font-bold text-sm sm:text-base">
-
-<div>Total Marks</div>
+<div>Total</div>
 
 <div class="flex gap-2">
 
-<span class="bg-blue-600 text-white px-2 sm:px-3 py-1 rounded">
+<span class="bg-blue-600 text-white px-3 py-1 rounded">
 ${total}
 </span>
 
-<span class="bg-yellow-400 px-2 sm:px-3 py-1 rounded">
-${pass}
+<span class="bg-yellow-400 px-3 py-1 rounded">
+${status}
 </span>
 
 </div>
@@ -611,9 +604,7 @@ document.getElementById("result").innerHTML=out
 
 }
 
-
 </script>
-
 
 </body>
 </html>
