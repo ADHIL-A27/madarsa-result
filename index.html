@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 
@@ -43,7 +42,8 @@ class="border p-2 w-full mb-2 rounded">
 
 <button onclick="searchResult()"
 class="bg-blue-600 text-white w-full p-2 rounded mb-3">
-Search </button>
+Search
+</button>
 
 <div id="result"></div>
 
@@ -468,6 +468,7 @@ let students = [
 }
 ];
 
+    
 
 
 function searchResult(){
@@ -477,6 +478,48 @@ let name=document.getElementById("name").value.toLowerCase()
 let cls=document.getElementById("class").value
 
 let out=""
+
+
+
+/* --------- RANK CALCULATION --------- */
+
+let rankMap = {}
+
+students.forEach(st=>{
+
+let total = 0
+
+for(let sub in st.subjects){
+total += st.subjects[sub]
+}
+
+if(!rankMap[st.class]) rankMap[st.class] = []
+
+rankMap[st.class].push({
+roll: st.roll,
+total: total
+})
+
+})
+
+for(let c in rankMap){
+
+rankMap[c].sort((a,b)=>b.total-a.total)
+
+rankMap[c].forEach((r,i)=>{
+
+if(i==0) r.rank="First Class"
+else if(i==1) r.rank="Second Class"
+else if(i==2) r.rank="Third Class"
+else r.rank="Pass"
+
+})
+
+}
+
+
+
+/* --------- SEARCH --------- */
 
 students.forEach(s=>{
 
@@ -524,25 +567,16 @@ ${getGrade(m)}
 
 }
 
-let avg = total / count
 
-let status=""
+let status="Pass"
 
-if(fail){
-status="Fail"
-}
-else if(avg>=70){
-status="First Class"
-}
-else if(avg>=60){
-status="Second Class"
-}
-else if(avg>=50){
-status="Third Class"
-}
-else{
-status="Pass"
-}
+let list = rankMap[s.class]
+
+let r = list.find(x=>x.roll==s.roll)
+
+if(r) status = r.rank
+
+if(fail) status="Fail"
 
 
 
